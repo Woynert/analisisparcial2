@@ -8,8 +8,6 @@ using namespace std;
 int
 factorial (vector<int>* fact, int n)
 {
-	printf("Called\n");
-
 	//resize storage
 	if (fact->size () <= n)
 		fact->resize (n+1);
