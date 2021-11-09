@@ -130,6 +130,7 @@ int
 main ()
 {
 	//fill relations (NodeA, NodeB, Distance)
+	bool printchar = true;
 	const int size = 11;
 	int tree [size][3] = {
 		{'a','b',2},
@@ -151,7 +152,7 @@ main ()
 
 	//print tree
 	printf ("Original:\n");
-	printTree (tree, size, true);
+	printTree (tree, size, printchar);
 
 	//sort by distance
 	qsort (tree, 0, size - 1);
@@ -161,7 +162,7 @@ main ()
 
 	//now print
 	printf ("Minimum Spanning Tree:\n");
-	printTree (min_tree, *(mt_size), true);
+	printTree (min_tree, *(mt_size), printchar);
 
 	return 0;
 }
