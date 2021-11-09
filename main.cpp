@@ -1,20 +1,32 @@
 #include <stdio.h>
 #include <unordered_map>
-//#include <string>
 using namespace std;
 
+
 void
-printTree (int tree[][3],
-		   int size)
+printTree (int  tree[][3],
+		   int  size,
+		   bool printchar)
 {
 	for (int i = 0; i < size; i++)
 	{
-        printf ("{%i"   , tree[i][0]);
-        printf (" %i"   , tree[i][1]);
-        printf (" %i}\n", tree[i][2]);
+		if (printchar)
+		{
+			printf ("(%c,"   , tree[i][0]);
+	        printf (" %c)"   , tree[i][1]);
+		}
+		else
+		{
+			printf ("(%i,"   , tree[i][0]);
+	        printf (" %i)"   , tree[i][1]);
+		}
+
+        printf (" : %i\n", tree[i][2]);
     }
+
     printf ("\n");
 }
+
 
 void
 qsort (int arr[][3],
@@ -31,14 +43,10 @@ qsort (int arr[][3],
     while (i < j)
     {
         while ((arr[i][2] <= arr[pivote][2]) && (i < j))
-        {
             i++;
-        }
 
         while (arr[pivote][2] < arr[j][2])
-        {
             j--;
-        }
 
         //intercambiar
         if (i < j)
@@ -62,6 +70,7 @@ qsort (int arr[][3],
         qsort (arr, j+1, der);
 }
 
+
 char
 find_root (unordered_map<char, char> *PARENT,
 		   char                       node)
@@ -71,6 +80,7 @@ find_root (unordered_map<char, char> *PARENT,
 	else
 		return find_root (PARENT, (*PARENT) [node]);
 }
+
 
 void
 kruskal (int  tree[][3],
@@ -119,36 +129,39 @@ kruskal (int  tree[][3],
 int
 main ()
 {
-
 	//fill relations (NodeA, NodeB, Distance)
-	const int size = 10;
+	const int size = 11;
 	int tree [size][3] = {
-		{1,2,2},
-		{1,3,3},
-		{1,4,3},
-		{2,3,4},
-		{2,5,3},
-		{3,4,5},
-		{3,5,1},
-		{4,6,7},
-		{5,6,8},
-		{6,7,9},
+		{'a','b',2},
+		{'a','c',3},
+		{'b','d',2},
+		{'c','d',1},
+		{'d','e',2},
+		{'d','f',4},
+		{'e','f',1},
+		{'e','g',2},
+		{'f','g',2},
+		{'f','h',1},
+		{'g','h',3},
 	};
 
 	int min_tree[size][3];
 	int* mt_size;
 
-	//sort by distance
-	qsort (tree, 0, size - 1);
 
 	//print tree
-	printTree (tree, size);
+	printf ("Original:\n");
+	printTree (tree, size, true);
+
+	//sort by distance
+	qsort (tree, 0, size - 1);
 
 	//kruskal
 	kruskal (tree, size, min_tree, mt_size);
 
 	//now print
-	printTree (min_tree, *(mt_size));
+	printf ("Minimum Spanning Tree:\n");
+	printTree (min_tree, *(mt_size), true);
 
 	return 0;
 }
