@@ -6,9 +6,14 @@
 using namespace std;
 
 int
-weight ( int GRAPH[][4], int node, int past[], int past_amount, unordered_map<string, string> *PATH )
+weight (int GRAPH[][4],
+		int node,
+		int past[],
+		int past_amount,
+		unordered_map<string, string> *PATH)
 {
-	if (past_amount > 0){
+	if (past_amount > 0)
+	{
 
 		int min = 0;
 		int w;
@@ -33,7 +38,7 @@ weight ( int GRAPH[][4], int node, int past[], int past_amount, unordered_map<st
 					pastpast [ind] = past[j];
 					ind++;
 
-					pastpaststr += to_string(past[j]);// + ",";
+					pastpaststr += to_string(past[j]);
 				}
 			}
 
@@ -41,7 +46,6 @@ weight ( int GRAPH[][4], int node, int past[], int past_amount, unordered_map<st
 			w += GRAPH[node][past[i]];
 
 			path = (*PATH)[ to_string(past[i]) + pastpaststr];
-			//printf ("node:%i path:%s pps:%s\n", past[i], path.c_str(), pastpaststr.c_str());
 
 			if ((w < min) || (min == 0))
 			{
@@ -50,16 +54,12 @@ weight ( int GRAPH[][4], int node, int past[], int past_amount, unordered_map<st
 			}
 		}
 
-		//printf ("node: %i past(%i): {%s}  w: %i\n", node, past_amount, txt.c_str(), w);
-		//printf ("%s : %s\n", (to_string(node)+paststr).c_str(), (to_string(node) + minpath).c_str());
 		(*PATH) [to_string(node)+paststr] = to_string(node) + minpath;
-
 		return min;
 	}
 
 	else
 	{
-		//printf ("node: %i past(%i): w: %i\n\n", node, past_amount, GRAPH[node][0]);
 		(*PATH) [to_string(node)] = to_string(node);
 		return ( GRAPH[node][0] );
 	}
